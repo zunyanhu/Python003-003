@@ -21,9 +21,9 @@ class MaoyanSpider(scrapy.Spider):
             count += 1
             if count > 10:
                 break
-            yield scrapy.Request(url=link, callback=self.parse2)
+            yield scrapy.Request(url=link, callback=self.parse_detail)
 
-    def parse2(self, response):
+    def parse_detail(self, response):
         item = MaoyanItem()
         film_name = response.xpath('/html/body/div[3]/div/div[2]/div[1]/h1/text()').extract()[0]
         film_type = response.xpath('/html/body/div[3]/div/div[2]/div[1]/ul/li[1]/a//text()').extract()

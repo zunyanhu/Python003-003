@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from ..items import MaoyanItem
-from scrapy.selector import Selector
-import requests
-from bs4 import BeautifulSoup as bs
 
 
 class MaoyanSpider(scrapy.Spider):
@@ -28,9 +25,6 @@ class MaoyanSpider(scrapy.Spider):
         film_name = response.xpath('/html/body/div[3]/div/div[2]/div[1]/h1/text()').extract()[0]
         film_type = response.xpath('/html/body/div[3]/div/div[2]/div[1]/ul/li[1]/a//text()').extract()
         release_time = response.xpath('/html/body/div[3]/div/div[2]/div[1]/ul/li[3]/text()').extract()[0]
-        print(film_name)
-        print(film_type)
-        print(release_time)
         item['film_name'] = film_name
         item['film_type'] = ''.join(film_type)
         item['release_time'] = release_time

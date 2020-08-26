@@ -7,11 +7,24 @@
 
 
 class MaoyanPipeline(object):
+    # def process_item(self, item, spider):
+    #     film_name = item['film_name']
+    #     film_type = item['film_type']
+    #     release_time = item['release_time']
+    #     data = f'{film_name}|{film_type}|{release_time}\n'
+    #     with open('./dmaoyanfilm.txt', 'a', encoding='utf-8') as article:
+    #         article.write(data)
+    #     return item
+    def open_spider(self, spider):
+        self.file = open('./maoyanfilm.txt', 'a', encoding='utf-8')
+
     def process_item(self, item, spider):
         film_name = item['film_name']
         film_type = item['film_type']
         release_time = item['release_time']
         data = f'{film_name}|{film_type}|{release_time}\n'
-        with open('./dmaoyanfilm.txt', 'a+', encoding='utf-8') as article:
-            article.write(data)
+        self.file.write(data)
         return item
+
+    def close_spider(self):
+        self.file.close()

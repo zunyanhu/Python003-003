@@ -22,9 +22,9 @@ class MaoyanSpider(scrapy.Spider):
 
     def parse_detail(self, response):
         item = MaoyanItem()
-        film_name = response.xpath('/html/body/div[3]/div/div[2]/div[1]/h1/text()').extract()[0]
-        film_type = response.xpath('/html/body/div[3]/div/div[2]/div[1]/ul/li[1]/a//text()').extract()
-        release_time = response.xpath('/html/body/div[3]/div/div[2]/div[1]/ul/li[3]/text()').extract()[0]
+        film_name = response.xpath('//div[@class="movie-brief-container"]/h1/text()').extract()[0]
+        film_type = response.xpath('//li[@class="ellipsis"]/a//text()').extract()
+        release_time = response.xpath('//div[@class="movie-brief-container"]/ul/li[3]/text()').extract()[0]
         item['film_name'] = film_name
         item['film_type'] = ''.join(film_type)
         item['release_time'] = release_time

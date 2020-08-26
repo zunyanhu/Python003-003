@@ -41,5 +41,5 @@ class MaoyanPipeline(object):
             item['release_time'],
         )
 
-        sql = 'INSERT INTO books VALUES(%s,%s,%s)'
+        sql = 'INSERT INTO maoyanfilm_data VALUES(%s,%s,%s)'
         self.db_cur.execute(sql, values)

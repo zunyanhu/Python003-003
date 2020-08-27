@@ -8,14 +8,6 @@ import pymysql
 
 
 class MaoyanPipeline(object):
-    # def process_item(self, item, spider):
-    #     film_name = item['film_name']
-    #     film_type = item['film_type']
-    #     release_time = item['release_time']
-    #     data = f'{film_name}|{film_type}|{release_time}\n'
-    #     with open('./maoyanfilm.txt', 'a', encoding='utf-8') as article:
-    #         article.write(data)
-    #     return item
     def open_spider(self, spider):
         db = spider.settings.get('MYSQL_DB_NAME', 'spider_data')
         host = spider.settings.get('MYSQL_HOST', 'localhost')
@@ -35,11 +27,6 @@ class MaoyanPipeline(object):
         return item
 
     def insert_db(self, item):
-        values = (
-            item['film_name'],
-            item['film_type'],
-            item['release_time'],
-        )
+        sql = """INSERT INTO maoyanfilm_data(film_name, film_type, release_time) VALUES ('%s', '%s', '%s')""" % (item['film_name'], item['film_type'], item['release_time'])
 
-        sql = 'INSERT INTO maoyanfilm_data VALUES(%s,%s,%s)'
-        self.db_cur.execute(sql, values)
+        self.db_cur.execute(sql)

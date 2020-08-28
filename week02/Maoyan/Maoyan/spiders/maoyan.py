@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from ..items import MaoyanItem
+# from ..items import MaoyanItem
+from week01.Maoyan.Maoyan.items import MaoyanItem
 
 
 class MaoyanSpider(scrapy.Spider):

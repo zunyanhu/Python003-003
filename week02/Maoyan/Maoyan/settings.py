@@ -62,8 +62,8 @@ DOWNLOAD_DELAY = 3
 DOWNLOADER_MIDDLEWARES = {
     'Maoyan.middlewares.MaoyanDownloaderMiddleware': 543,
     'Maoyan.middlewares.RandomProxyMiddleware': 200,
-    'Maoyan.middlewares.CheckProxyMiddleware': None,
-    'Maoyan.middlewares.ExceptionMiddleware': 202,
+    'Maoyan.middlewares.ExceptionMiddleware': 500,
+    'Maoyan.middlewares.CustomRetryMiddleware': 400,
 }
 
 # Enable or disable extensions
@@ -98,6 +98,7 @@ AUTOTHROTTLE_MAX_DELAY = 60
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
 MYSQL_DB_NAME = 'spider_data'
 MYSQL_HOST = '127.0.0.1'
 MYSQL_USER = 'root'

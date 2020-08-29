@@ -18,10 +18,6 @@ class MaoyanPipeline(object):
         self.db_conn = pymysql.connect(host=host, port=port, db=db, user=user, passwd=passwd, charset='utf8')
         self.db_cur = self.db_conn.cursor()
 
-    def close_spider(self, spider):
-        self.db_conn.commit()
-        self.db_conn.close()
-
     def process_item(self, item, spider):
         self.insert_db(item)
         return item
@@ -33,3 +29,8 @@ class MaoyanPipeline(object):
         except Exception as e:
             print(f'发生异常：{e}')
             self.db_conn.rollback()
+
+    def close_spider(self, spider):
+        self.db_cur.close()
+        self.db_conn.commit()
+        self.db_conn.close()

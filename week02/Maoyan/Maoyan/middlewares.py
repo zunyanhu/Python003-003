@@ -113,12 +113,6 @@ class RandomProxyMiddleware(object):
         request.meta['proxy'] = f'http://{ip}'
 
 
-class CheckProxyMiddleware(object):
-    def process_response(self, request, response, spider):
-        print('代理IP:', request.meta['proxy'])
-        return response
-
-
 from twisted.internet import defer
 from twisted.internet.error import TimeoutError, DNSLookupError, ConnectionRefusedError, ConnectionDone, ConnectError, ConnectionLost, TCPTimedOutError
 from scrapy.http import HtmlResponse
@@ -144,3 +138,30 @@ class ExceptionMiddleware(object):
             response = HtmlResponse(url='exception')
             return response
         print('not contained exception: %s' % exception)
+
+
+from scrapy.downloadermiddlewares.retry import RetryMiddleware
+from scrapy.utils.response import response_status_message
+import time
+
+
+class CustomRetryMiddleware(RetryMiddleware):
+
+    def process_response(self, request, response, spider):
+
+        if request.meta.get('dont_retry', False):
+            return response
+        if response.status in self.retry_http_codes:
+            reason = response_status_message(response.status)
+            proxy = random.choice(my_proxies.proxy_list)
+            request.meta['proxy'] = proxy
+            return self._retry(request, reason, spider) or response
+
+        return response
+
+    def process_exception(self, request, exception, spider):
+        if isinstance(exception, self.EXCEPTIONS_TO_RETRY) and not request.meta.get('dont_retry', False):
+            proxy = random.choice(my_proxies.proxy_list)
+            request.meta['proxy'] = proxy
+            time.sleep(random.randint(3, 5))
+            return self._retry(request, exception, spider)

@@ -7,24 +7,28 @@
 # @Contact ： zunyan.hu@gmail.com
 import time
 from selenium import webdriver
+try:
+    browser = webdriver.Chrome()
 
-browser = webdriver.Chrome()
+    browser.get('https://shimo.im/login?from=home')
+    time.sleep(1)
 
-browser.get('https://shimo.im/login?from=home')
-time.sleep(1)
+    username = browser.find_element_by_name('mobileOrEmail')
+    username.send_keys('15895981485')
+    time.sleep(1)
 
-username = browser.find_element_by_name('mobileOrEmail')
-username.send_keys('15895981485')
-time.sleep(1)
+    password = browser.find_element_by_name('password')
+    password.send_keys('12345678')
+    time.sleep(1)
 
-password = browser.find_element_by_name('password')
-password.send_keys('12345678')
-time.sleep(1)
+    submit = browser.find_element_by_xpath('//div/button[@class="sm-button submit sc-1n784rm-0 bcuuIb"]')
+    submit.click()
+    time.sleep(5)
 
+    cookies = browser.get_cookies()  # 获取cookies
+    print(cookies)
 
-submit = browser.find_element_by_xpath('//div/button[@class="sm-button submit sc-1n784rm-0 bcuuIb"]')
-submit.click()
-time.sleep(5)
-
-cookies = browser.get_cookies()  # 获取cookies
-print(cookies)
+except Exception as e:
+    print(e)
+finally:
+    browser.close()

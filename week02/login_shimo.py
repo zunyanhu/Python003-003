@@ -18,7 +18,7 @@ username.send_keys('15895981485')
 time.sleep(1)
 
 password = browser.find_element_by_name('password')
-password.send_keys('123456')
+password.send_keys('12345678')
 time.sleep(1)
 
 

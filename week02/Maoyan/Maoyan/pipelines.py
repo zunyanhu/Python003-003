@@ -33,5 +33,3 @@ class MaoyanPipeline(object):
         except Exception as e:
             print(f'发生异常：{e}')
             self.db_conn.rollback()
-        finally:
-            self.db_conn.close()

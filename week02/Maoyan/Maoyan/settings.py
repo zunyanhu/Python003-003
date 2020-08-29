@@ -61,10 +61,9 @@ DOWNLOAD_DELAY = 3
 
 DOWNLOADER_MIDDLEWARES = {
     'Maoyan.middlewares.MaoyanDownloaderMiddleware': 543,
-    'Maoyan.middlewares.RandomProxyMiddleware': None,
+    'Maoyan.middlewares.RandomProxyMiddleware': 200,
     'Maoyan.middlewares.CheckProxyMiddleware': None,
     'Maoyan.middlewares.ExceptionMiddleware': 202,
-    'Maoyan.middlewares.ProxyMiddleware': 200,
 }
 
 # Enable or disable extensions
@@ -103,4 +102,3 @@ MYSQL_DB_NAME = 'spider_data'
 MYSQL_HOST = '127.0.0.1'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = ''
-PROXY_URL = 'http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=1fe053d993e0445981f2dfb7829b4e95&orderno=YZ20208269008IhGA9f&returnType=1&count=1'

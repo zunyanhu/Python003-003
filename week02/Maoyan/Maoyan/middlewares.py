@@ -8,6 +8,15 @@
 from scrapy import signals
 import random
 from . import my_proxies
+from twisted.internet import defer
+from twisted.internet.error import TimeoutError, DNSLookupError, ConnectionRefusedError, ConnectionDone, ConnectError, \
+    ConnectionLost, TCPTimedOutError
+from scrapy.http import HtmlResponse
+from twisted.web.client import ResponseFailed
+from scrapy.core.downloader.handlers.http11 import TunnelError
+from scrapy.downloadermiddlewares.retry import RetryMiddleware
+from scrapy.utils.response import response_status_message
+import time
 
 
 class MaoyanSpiderMiddleware(object):
@@ -106,18 +115,10 @@ class MaoyanDownloaderMiddleware(object):
 
 
 class RandomProxyMiddleware(object):
-
     def process_request(self, request, spider):
         ip = random.choice(my_proxies.proxy_list)
         print('测试IP:', ip)
         request.meta['proxy'] = f'http://{ip}'
-
-
-from twisted.internet import defer
-from twisted.internet.error import TimeoutError, DNSLookupError, ConnectionRefusedError, ConnectionDone, ConnectError, ConnectionLost, TCPTimedOutError
-from scrapy.http import HtmlResponse
-from twisted.web.client import ResponseFailed
-from scrapy.core.downloader.handlers.http11 import TunnelError
 
 
 class ExceptionMiddleware(object):
@@ -140,15 +141,8 @@ class ExceptionMiddleware(object):
         print('not contained exception: %s' % exception)
 
 
-from scrapy.downloadermiddlewares.retry import RetryMiddleware
-from scrapy.utils.response import response_status_message
-import time
-
-
 class CustomRetryMiddleware(RetryMiddleware):
-
     def process_response(self, request, response, spider):
-
         if request.meta.get('dont_retry', False):
             return response
         if response.status in self.retry_http_codes:
@@ -156,7 +150,6 @@ class CustomRetryMiddleware(RetryMiddleware):
             proxy = random.choice(my_proxies.proxy_list)
             request.meta['proxy'] = proxy
             return self._retry(request, reason, spider) or response
-
         return response
 
     def process_exception(self, request, exception, spider):

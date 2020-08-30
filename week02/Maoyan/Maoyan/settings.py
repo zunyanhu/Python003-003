@@ -61,7 +61,7 @@ DOWNLOAD_DELAY = 3
 
 DOWNLOADER_MIDDLEWARES = {
     'Maoyan.middlewares.MaoyanDownloaderMiddleware': 543,
-    'Maoyan.middlewares.RandomProxyMiddleware': None,
+    'Maoyan.middlewares.RandomProxyMiddleware': 500,
     'Maoyan.middlewares.ExceptionMiddleware': 544,
 }
 

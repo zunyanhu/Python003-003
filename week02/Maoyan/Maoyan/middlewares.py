@@ -14,9 +14,6 @@ from twisted.internet.error import TimeoutError, DNSLookupError, ConnectionRefus
 from scrapy.http import HtmlResponse
 from twisted.web.client import ResponseFailed
 from scrapy.core.downloader.handlers.http11 import TunnelError
-from scrapy.downloadermiddlewares.retry import RetryMiddleware
-from scrapy.utils.response import response_status_message
-import time
 
 
 class MaoyanSpiderMiddleware(object):

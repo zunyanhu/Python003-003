@@ -61,9 +61,8 @@ DOWNLOAD_DELAY = 3
 
 DOWNLOADER_MIDDLEWARES = {
     'Maoyan.middlewares.MaoyanDownloaderMiddleware': 543,
-    'Maoyan.middlewares.RandomProxyMiddleware': 200,
+    'Maoyan.middlewares.RandomProxyMiddleware': None,
     'Maoyan.middlewares.ExceptionMiddleware': 500,
-    'Maoyan.middlewares.CustomRetryMiddleware': 400,
 }
 
 # Enable or disable extensions

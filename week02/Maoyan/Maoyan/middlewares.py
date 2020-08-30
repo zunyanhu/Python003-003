@@ -117,7 +117,7 @@ class MaoyanDownloaderMiddleware(object):
 class RandomProxyMiddleware(object):
     def process_request(self, request, spider):
         ip = random.choice(my_proxies.proxy_list)
-        print('测试IP:', ip)
+        print('代理IP:', ip)
         request.meta['proxy'] = f'http://{ip}'
 
 
@@ -139,22 +139,3 @@ class ExceptionMiddleware(object):
             response = HtmlResponse(url='exception')
             return response
         print('not contained exception: %s' % exception)
-
-
-class CustomRetryMiddleware(RetryMiddleware):
-    def process_response(self, request, response, spider):
-        if request.meta.get('dont_retry', False):
-            return response
-        if response.status in self.retry_http_codes:
-            reason = response_status_message(response.status)
-            proxy = random.choice(my_proxies.proxy_list)
-            request.meta['proxy'] = proxy
-            return self._retry(request, reason, spider) or response
-        return response
-
-    def process_exception(self, request, exception, spider):
-        if isinstance(exception, self.EXCEPTIONS_TO_RETRY) and not request.meta.get('dont_retry', False):
-            proxy = random.choice(my_proxies.proxy_list)
-            request.meta['proxy'] = proxy
-            time.sleep(random.randint(3, 5))
-            return self._retry(request, exception, spider)

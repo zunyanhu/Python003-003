@@ -9,14 +9,12 @@ import threading
 import time
 import random
 
-lock = threading.Lock()
-
 
 class DiningPhilosophers(threading.Thread):
-    def __init__(self, philosopher):
+    def __init__(self):
         super(DiningPhilosophers, self).__init__()
         self.lock = threading.Lock()
-        self.name = philosopher
+        self.scientists = range(1, 6)
         self.output = []
 
     # philosopher 哲学家的编号。
@@ -30,44 +28,57 @@ class DiningPhilosophers(threading.Thread):
     def wants_to_eat(self):
         behavior_record = []
         self.lock.acquire()
-        behavior_record.append(self.name)
-        direction_flag = random.randrange(1, 3)
-        if direction_flag == 1:
-            self.pick_left_fork(behavior_record)
-        else:
-            self.pick_right_fork(behavior_record)
+        behavior_record.append(random.choice(self.scientists))
         behavior_flag = random.randrange(1, 4)
         if behavior_flag == 1:
-            pass
-        self.eat()
-        self.put_left_fork()
-        self.put_right_fork()
+            direction_flag = random.randrange(1, 3)
+            if direction_flag == 1:
+                self.pick_left_fork(behavior_record)
+            else:
+                self.pick_right_fork(behavior_record)
+            behavior_record.append('1')
+        elif behavior_flag == 2:
+            direction_flag = random.randrange(1, 3)
+            if direction_flag == 1:
+                self.put_left_fork(behavior_record)
+            else:
+                self.put_right_fork(behavior_record)
+            behavior_record.append('2')
+        else:
+            direction_flag = random.randrange(1, 3)
+            if direction_flag == 1:
+                self.put_left_fork(behavior_record)
+            else:
+                self.put_right_fork(behavior_record)
+            self.eat(behavior_record)
+
         self.lock.release()
         time.sleep(random.randrange(1, 5))
         print(behavior_record)
+        return behavior_record
 
     @staticmethod
-    def pick_left_fork(behavior):
-        behavior.append('1')
+    def pick_left_fork(behavior_record):
+        behavior_record.append('1')
 
     @staticmethod
-    def pick_right_fork(behavior):
-        behavior.append('2')
+    def pick_right_fork(behavior_record):
+        behavior_record.append('2')
 
     @staticmethod
-    def put_left_fork():
-        print()
+    def put_left_fork(behavior_record):
+        behavior_record.append('1')
 
     @staticmethod
-    def put_right_fork():
-        pass
+    def put_right_fork(behavior_record):
+        behavior_record.append('2')
 
     @staticmethod
-    def eat():
-        print('3')
+    def eat(behavior_record):
+        behavior_record.append('2')
 
 
 if __name__ == "__main__":
-    for i in range(5):
-        t = DiningPhilosophers(i)
+    for i in range(60):
+        t = DiningPhilosophers()
         t.start()

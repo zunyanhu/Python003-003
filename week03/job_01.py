@@ -10,6 +10,8 @@ import time
 import random
 import queue
 
+q = queue.Queue()
+
 
 class DiningPhilosophers(threading.Thread):
     def __init__(self):
@@ -74,7 +76,7 @@ class DiningPhilosophers(threading.Thread):
 
 def main():
     out_put = []
-    n = 5
+    n = 10
     start_time = time.time()
     for _ in range(n):
         threads = [DiningPhilosophers() for _ in range(5)]
@@ -88,5 +90,4 @@ def main():
 
 
 if __name__ == "__main__":
-    q = queue.Queue()
     main()

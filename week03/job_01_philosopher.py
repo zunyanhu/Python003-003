@@ -77,16 +77,12 @@ class DiningPhilosophers(threading.Thread):
 def main():
     out_put = []
     n = 10
-    start_time = time.time()
     for _ in range(n):
         threads = [DiningPhilosophers() for _ in range(5)]
         for t in threads:
             t.start()
             out_put.append(q.get())
     print(out_put)
-    end_time = time.time()
-    cost_time = end_time - start_time
-    print(f'共耗时：{cost_time}秒')
 
 
 if __name__ == "__main__":

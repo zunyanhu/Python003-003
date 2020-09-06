@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/9/2 15:08
 # @Author  : huzunyan
-# @File    : job_01
+# @File    : job_01_philosopher
 # @Software: PyCharm
 # @Contact ： zunyan.hu@gmail.com
 import threading

@@ -9,10 +9,11 @@ from selenium import webdriver
 from multiprocessing import Process
 import requests
 import time
-from lxml import etree
+import lxml.etree
 
 
-def get_lagou_beijing(url, browser):
+def get_lagou_beijing(url):
+    browser = webdriver.Chrome()
     browser.get(url)
     job_search = browser.find_element_by_id('search_input')
     job_search.send_keys('python工程师')
@@ -36,11 +37,9 @@ def get_lagou_beijing(url, browser):
         'upgrade-insecure-requests': '1',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
     }
-    print(cookies)
     response = requests.get(url=browser.current_url, cookies=cookies, headers=headers)
-    page_text = response.text
-    selector = etree.HTML(page_text)
-    li_list = selector.xpath('//ul[@class="item_con_list"]/li')
+    selector = lxml.etree.HTML(response.text)
+    li_list = selector.xpath('//ul[@class="item_con_list"]/ul//li')
     print(li_list)
     browser.close()
 
@@ -58,9 +57,9 @@ def get_lagou_shenzhen():
 
 
 def main():
-    browser = webdriver.Chrome()
+    
     url_beijing = 'https://www.lagou.com/beijing/'
-    p1 = Process(target=get_lagou_beijing, args=(url_beijing, browser))
+    p1 = Process(target=get_lagou_beijing, args=(url_beijing, ))
     p2 = Process(target=get_lagou_guangzhou, )
     p3 = Process(target=get_lagou_guangzhou, )
     p4 = Process(target=get_lagou_shenzhen, )

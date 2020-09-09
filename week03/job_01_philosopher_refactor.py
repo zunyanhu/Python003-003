@@ -23,12 +23,25 @@ class DiningPhilosophers(threading.Thread):
     def run(self):
         global count
         while True:
-            self.left_fork.pick_left_fork()
-            self.right_fork.pick_right_fork()
-            self.eat()
-            self.left_fork.put_left_fork()
-            self.right_fork.put_right_fork()
-            self.think()
+            # self.left_fork.pick_left_fork()
+            # self.right_fork.pick_right_fork()
+            # self.eat()
+            # self.left_fork.put_left_fork()
+            # self.right_fork.put_right_fork()
+            # self.think()
+            # if count >= self.num:
+            #     break
+            action_flag = random.randint(0, 1)
+            if action_flag == 0:
+                self.left_fork.pick_right_fork()
+                self.eat()
+                self.left_fork.put_right_fork()
+                self.think()
+            else:
+                self.right_fork.pick_right_fork()
+                self.eat()
+                self.right_fork.put_right_fork()
+                self.think()
             if count >= self.num:
                 break
 

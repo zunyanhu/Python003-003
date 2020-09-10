@@ -13,24 +13,36 @@ file_1 = 'info_1.csv'
 file_2 = 'info_2.csv'
 
 
-df = pd.read_csv(file_1, encoding='utf-8', sep='\t')
-df = df.reset_index()
-df.insert(0, 'id', range(len(df)))
-# df.insert(4, 'age', random.randint(1, 100))
-df.insert(6, 'age', [random.randint(1, 100) for _ in range(len(df))])
-pre_df = df
+pre_df_1 = pd.read_csv(file_1, encoding='utf-8', sep='\t')
+pre_df_1 = pre_df_1.reset_index()
+pre_df_1.insert(0, 'id', range(len(pre_df_1)))
+pre_df_1.insert(6, 'age', [random.randint(0, 100) for _ in range(len(pre_df_1))])
+df_1 = pre_df_1
 
-df1 = df
-print(f'第一题：\n{df1}\n==============分割线==============')
+pre_df_2 = pd.read_csv(file_2, encoding='utf-8', sep='\t')
+pre_df_2 = pre_df_2.reset_index()
+pre_df_2.insert(0, 'id', range(len(pre_df_2)))
+pre_df_2.insert(6, 'age', [random.randint(0, 100) for _ in range(len(pre_df_2))])
+df_2 = pre_df_2
 
-df2 = df.head(10)
-print(f'第二题：\n{df2}\n==============分割线==============')
+df1 = df_1
+print(f'question 1：\n{df1}\n')
 
-df3 = df['id']
-print(f'第三题：\n{df3}\n==============分割线==============')
+df2 = df_1.head(10)
+print(f'question 2：\n{df2}\n')
+
+df3 = df_1['id']
+print(f'question 3：\n{df3}\n')
 
 df4 = df3.count()
-print(f'第四题：\n{df4}\n==============分割线==============')
+print(f'question 4：\n{df4}\n')
 
-df5 = df[(df['age'] > 30) & (df['id'] < 1000)]
-print(f'第五题：\n{df5}\n==============分割线==============')
+df5 = df_1[(df_1['age'] > 30) & (df_1['id'] < 1000)]
+print(f'question 5：\n{df5}\n')
+
+frames = [df_1, df_2]
+df8 = pd.concat(frames)
+print(f'question 8：\n{df8}\n')
+
+df9 = df_2.drop(df_2[df_2.id == 10].id)
+print(f'question 9: \n{df9}\n')

@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 2020/9/24 14:26
+# @Author  : huzunyan
+# @File    : urls
+# @Software: PyCharm
+# @Contact ： zunyan.hu@gmail.com
+from django.urls import path
+from . import views
+
+
+urlpatterns = [
+    path('', views.film_review),
+    path('search/', views.search, name='search')
+]

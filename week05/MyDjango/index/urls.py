@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2020/9/24 14:26
+# @Time    : 2020/9/25 11:06
 # @Author  : huzunyan
 # @File    : urls
 # @Software: PyCharm
@@ -9,8 +9,6 @@ from django.urls import path
 from . import views
 from django.conf.urls import url
 
-
 urlpatterns = [
-    path('', views.film_review),
-    url('search/', views.search, name='search'),
+    path('', views.index),
 ]

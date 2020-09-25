@@ -8,6 +8,9 @@ class T1(models.Model):
     short = models.CharField(max_length=500)
     n_star = models.IntegerField()
 
+    def __str__(self):
+        return self.short
+
     class Meta:
         managed = False
         db_table = 't1'

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索错误页</title>
+</head>
+<body>
+<a href="../../">返回首页</a>
+{% if error_msg %}
+    <p>错误信息：{{ error_msg }}</p>
+{% endif %}
+</body>
+</html>

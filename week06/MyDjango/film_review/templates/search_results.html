@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索结果页</title>
+</head>
+<body>
+<a href="../../">返回首页</a>
+<a href="../">返回上一页</a>
+{% for res in short_results %}
+  <div>
+          <tr>
+              <th>{{ res.id }}</th>
+            <td>{{ res }}</td>
+        </tr>
+  </div>
+{% empty %}
+  <div class="no-post">
+    没有搜索到符合条件的短评
+  </div>
+{% endfor %}
+
+</body>
+</html>

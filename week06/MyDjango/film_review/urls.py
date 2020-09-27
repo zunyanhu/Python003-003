@@ -12,5 +12,5 @@ from django.conf.urls import url
 app_name = 'film_review'
 urlpatterns = [
     path('', views.film_review),
-    url('search/', views.search, name='search'),
+    path('search/', views.search, name='search'),
 ]

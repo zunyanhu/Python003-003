@@ -7,19 +7,38 @@
 # @Contact ： zunyan.hu@gmail.com
 import time
 import random
+from functools import wraps
 
+
+# def timer(func):
+#     def call_fun(*args, **kwargs):
+#         start_time = time.time()
+#         func(*args, **kwargs)
+#         end_time = time.time()
+#         print(f'程序用时：{end_time-start_time}秒')
+#     return call_fun
 
 def timer(func):
-    def call_fun(*args, **kwargs):
+    """
+    用装饰器实现函数计时器
+    """
+    @wraps(func)
+    def func_timer(*args, **kwargs):
         start_time = time.time()
-        func(*args, **kwargs)
+        res = func(*args, **kwargs)
         end_time = time.time()
         print(f'程序用时：{end_time-start_time}秒')
-    return call_fun
+        return res
+    return func_timer
+
+
 
 
 @timer
 def sum_start_end(start, end):
+    """
+    需要被执行计时器的函数
+    """
     sum = 0
     for n in range(start, end+1):
         sum += n
@@ -27,4 +46,6 @@ def sum_start_end(start, end):
     print(f'计算结果为：{sum}')
 
 
-sum_start_end(1, 10)
+
+if __name__ == "__main__":
+    sum_start_end(1, 10)
